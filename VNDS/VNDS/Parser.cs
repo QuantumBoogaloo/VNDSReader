@@ -206,7 +206,10 @@ namespace VNDS
 
         private Command ParseTextCommand(ICharReader reader)
         {
-            string text = reader.ReadUntilAny('\n').TrimStart();
+            string text = reader.ReadUntilAny('\n');
+
+            if (text == null)
+                return new TextCommand("", TextOptions.AwaitInput);
 
             switch(text[0])
             {
