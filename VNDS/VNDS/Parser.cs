@@ -204,10 +204,23 @@ namespace VNDS
                 return new PlayMusicCommand(path);
         }
 
-        private TextCommand ParseTextCommand(ICharReader reader)
+        private Command ParseTextCommand(ICharReader reader)
         {
             string text = reader.ReadUntilAny('\n').TrimStart();
-            return new TextCommand(text);
+
+            switch(text[0])
+            {
+                case '~':
+                    return new TextCommand("", TextOptions.None);
+
+                case '!':
+                    return new AwaitInputCommand();
+
+                case '@':
+                    return new TextCommand(text.Substring(1), TextOptions.None);
+            }
+
+            return new TextCommand(text, TextOptions.AwaitInput);
         }
 
         private ChoiceCommand ParseChoiceCommand(ICharReader reader)
