@@ -64,7 +64,7 @@ namespace VNDS
             return TryReadUntilAny(reader, out result, new HashSet<char>(charset));
         }
 
-        public static bool ReadUntilAny(this ICharReader reader, out string result, IEnumerable<char> charset)
+        public static bool TryReadUntilAny(this ICharReader reader, out string result, IEnumerable<char> charset)
         {
             return TryReadUntilAny(reader, out result, new HashSet<char>(charset));
         }
