@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{399358B4-3080-4B33-85D4-99E52191D7C2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VNDS</RootNamespace>
+    <AssemblyName>VNDS</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CharReaderExtenstions.cs" />
+    <Compile Include="Commands\AwaitInputCommand.cs" />
+    <Compile Include="Commands\BackgroundLoadCommand.cs" />
+    <Compile Include="Commands\ChoiceCommand.cs" />
+    <Compile Include="Commands\ClearGlobalVariablesCommand.cs" />
+    <Compile Include="Commands\ClearTextCommand.cs" />
+    <Compile Include="Commands\ClearLocalVariablesCommand.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\CommandVisitor.cs" />
+    <Compile Include="Commands\DelayCommand.cs" />
+    <Compile Include="Commands\EndScriptCommand.cs" />
+    <Compile Include="Commands\FiCommand.cs" />
+    <Compile Include="Commands\SetGlobalVariableCommand.cs" />
+    <Compile Include="Commands\GlobalVariableCommand.cs" />
+    <Compile Include="Commands\GoToCommand.cs" />
+    <Compile Include="Commands\IfCommand.cs" />
+    <Compile Include="Commands\IfOperation.cs" />
+    <Compile Include="Commands\JumpCommand.cs" />
+    <Compile Include="Commands\LabelCommand.cs" />
+    <Compile Include="Commands\MusicCommand.cs" />
+    <Compile Include="Commands\PlayMusicCommand.cs" />
+    <Compile Include="Commands\RandomCommand.cs" />
+    <Compile Include="Commands\SetImageCommand.cs" />
+    <Compile Include="Commands\SetOperation.cs" />
+    <Compile Include="Commands\SetLocalVariableCommand.cs" />
+    <Compile Include="Commands\SkipCommand.cs" />
+    <Compile Include="Commands\PlaySoundCommand.cs" />
+    <Compile Include="Commands\SoundCommand.cs" />
+    <Compile Include="Commands\StopMusicCommand.cs" />
+    <Compile Include="Commands\StopSoundCommand.cs" />
+    <Compile Include="Commands\TextCommand.cs" />
+    <Compile Include="Commands\LocalVariableCommand.cs" />
+    <Compile Include="Commands\TextOptions.cs" />
+    <Compile Include="Commands\Visitors\CommandFormatVisitor.cs" />
+    <Compile Include="ICharReader.cs" />
+    <Compile Include="Parser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StringCharReader.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
