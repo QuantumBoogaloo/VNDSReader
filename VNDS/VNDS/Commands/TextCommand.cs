@@ -21,7 +21,7 @@ namespace VNDS.Commands
         private string text;
         private TextOptions options;
 
-        public TextCommand(string text, TextOptions options = TextOptions.None)
+        public TextCommand(string text, TextOptions options)
         {
             this.text = text;
             this.options = options;
