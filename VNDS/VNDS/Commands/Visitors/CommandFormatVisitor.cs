@@ -197,9 +197,9 @@ namespace VNDS.Commands.Visitors
         {
             this.WriteIndent();
             if(textCommand.Options == TextOptions.None)
-                this.writer.WriteLine("text {0}", textCommand.Text);
-            else
                 this.writer.WriteLine("text @{0}", textCommand.Text);
+            else
+                this.writer.WriteLine("text {0}", textCommand.Text);
         }
 
         protected internal override void VisitSetLocalVariableCommand(SetLocalVariableCommand setLocalVariableCommand)
