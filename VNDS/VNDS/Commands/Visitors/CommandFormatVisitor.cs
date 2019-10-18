@@ -196,10 +196,17 @@ namespace VNDS.Commands.Visitors
         protected internal override void VisitTextCommand(TextCommand textCommand)
         {
             this.WriteIndent();
-            if(textCommand.Options == TextOptions.None)
-                this.writer.WriteLine("text @{0}", textCommand.Text);
+            if (textCommand.Options == TextOptions.None)
+            {
+                if (string.IsNullOrWhiteSpace(textCommand.Text))
+                    this.writer.WriteLine("text ~", textCommand.Text);
+                else
+                    this.writer.WriteLine("text @{0}", textCommand.Text);
+            }
             else
+            {
                 this.writer.WriteLine("text {0}", textCommand.Text);
+            }
         }
 
         protected internal override void VisitSetLocalVariableCommand(SetLocalVariableCommand setLocalVariableCommand)
