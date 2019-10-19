@@ -129,7 +129,7 @@ namespace VNDS.Commands.Visitors
         protected internal override void VisitChoiceCommand(ChoiceCommand choiceCommand)
         {
             this.WriteIndent();
-            this.writer.WriteLine("choice {0}", string.Join(" | ", choiceCommand.Choices));
+            this.writer.WriteLine("choice {0}", string.Join("|", choiceCommand.Choices));
         }
 
         protected internal override void VisitJumpCommand(JumpCommand jumpCommand)
