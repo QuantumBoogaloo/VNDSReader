@@ -48,19 +48,20 @@ namespace VNDSReader
         }
 
         static void ProcessFile(string path)
-        {            
-            var text = File.ReadAllText(path);
-            var reader = new StringCharReader(text);
-            var parser = new Parser(reader);
-
-            var commands = new List<Command>(FilterErroneousCommands(parser.ParseCommands()));
-            
-            using(var writer = new StreamWriter(Path.ChangeExtension(path, ".vnvita")))
+        {
+            using (var reader = new TextCharReader(new StreamReader(path)))
             {
-                var formatter = new CommandFormatVisitor(writer);
+                var parser = new Parser(reader);
 
-                foreach (var command in commands)
-                    formatter.Visit(command);
+                var commands = new List<Command>(FilterErroneousCommands(parser.ParseCommands()));
+
+                using (var writer = new StreamWriter(Path.ChangeExtension(path, ".vnvita")))
+                {
+                    var formatter = new CommandFormatVisitor(writer);
+
+                    foreach (var command in commands)
+                        formatter.Visit(command);
+                }
             }
         }
 
