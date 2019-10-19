@@ -97,7 +97,7 @@ namespace VNDS
         {
             string path;
             if (!TryReadString(reader, out path))
-                throw new Exception();
+                return new BackgroundLoadCommand(path, new ParseException("Unable to parse <path>"));
 
             int fadeTime;
             if (TryReadInt(reader, out fadeTime))
@@ -110,15 +110,15 @@ namespace VNDS
         {
             string path;
             if (!TryReadString(reader, out path))
-                throw new Exception();
+                return new SetImageCommand("", 0, 0, new ParseException("Unable to parse <path>"));
 
             int x;
             if (!TryReadInt(reader, out x))
-                throw new Exception();
+                return new SetImageCommand(path, x, 0, new ParseException("Unable to parse <x>"));
 
             int y;
             if (!TryReadInt(reader, out y))
-                throw new Exception();
+                return new SetImageCommand(path, x, y, new ParseException("Unable to parse <y>"));
 
             return new SetImageCommand(path, x, y);
         }
@@ -127,7 +127,7 @@ namespace VNDS
         {
             string path;
             if (!TryReadString(reader, out path))
-                throw new Exception();
+                return new PlaySoundCommand(path, new ParseException("Unable to parse <path>"));
 
             int repeats;
             if (TryReadInt(reader, out repeats))
@@ -140,7 +140,7 @@ namespace VNDS
         {
             string path;
             if (!TryReadString(reader, out path))
-                throw new Exception();
+                return new PlayMusicCommand(path, new ParseException("Unable to parse <path>"));
 
             if (path.Trim() == "~")
                 return new StopMusicCommand();
@@ -184,76 +184,76 @@ namespace VNDS
         {
             string left;
             if (!TryReadString(reader, out left))
-                throw new Exception();
+                return new SetLocalVariableCommand("", SetOperation.Add, "", new ParseException("Unable to parse <left>"));
 
             string op;
             if (!TryReadString(reader, out op))
-                throw new Exception();
+                return new SetLocalVariableCommand(left, SetOperation.Add, "", new ParseException("Unable to parse <operation>"));
 
             if (op.Trim() == "~")
                 return new ClearLocalVariablesCommand();
 
             SetOperation operation;
             if (!TryReadSetOperation(op, out operation))
-                throw new Exception();
+                return new SetLocalVariableCommand(left, SetOperation.Add, "", new ParseException("Unable to parse <operation>"));
 
             string right;
             if (TryReadString(reader, out right))
                 return new SetLocalVariableCommand(left, operation, right);
             else
-                return new SetLocalVariableCommand(left, operation, "");
+                return new SetLocalVariableCommand(left, operation, "", new ParseException("Unable to parse <right>"));
         }
 
         private Command ParseGlobalSetVariableCommand(ICharReader reader)
         {
             string left;
             if (!TryReadString(reader, out left))
-                throw new Exception();
+                return new SetGlobalVariableCommand("", SetOperation.Add, "", new ParseException("Unable to parse <left>"));
 
             string op;
             if (!TryReadString(reader, out op))
-                throw new Exception();
+                return new SetGlobalVariableCommand(left, SetOperation.Add, "", new ParseException("Unable to parse <operation>"));
 
             if (op.Trim() == "~")
                 return new ClearGlobalVariablesCommand();
 
             SetOperation operation;
             if (!TryReadSetOperation(op, out operation))
-                throw new Exception();
+                return new SetGlobalVariableCommand(left, SetOperation.Add, "", new ParseException("Unable to parse <operation>"));
 
             string right;
             if (TryReadString(reader, out right))
                 return new SetGlobalVariableCommand(left, operation, right);
             else
-                return new SetGlobalVariableCommand(left, operation, "");
+                return new SetGlobalVariableCommand(left, operation, "", new ParseException("Unable to parse <right>"));
         }
 
         private IfCommand ParseIfCommand(ICharReader reader)
         {
             string left;
             if (!TryReadString(reader, out left))
-                throw new Exception();
+                return new IfCommand("", IfOperation.Equals, "", new ParseException("Unable to parse <left>"));
 
             string op;
             if (!TryReadString(reader, out op))
-                throw new Exception();
+                return new IfCommand(left, IfOperation.Equals, "", new ParseException("Unable to parse <operation>"));
 
             IfOperation operation;
             if (!TryReadIfOperation(op, out operation))
-                throw new Exception();
+                return new IfCommand(left, IfOperation.Equals, "", new ParseException("Unable to parse <operation>"));
 
             string right;
             if (TryReadString(reader, out right))
                 return new IfCommand(left, operation, right);
             else
-                return new IfCommand(left, operation, "");
+                return new IfCommand(left, operation, "", new ParseException("Unable to parse <right>"));
         }
 
         private JumpCommand ParseJumpCommand(ICharReader reader)
         {
             string path;
             if (!TryReadString(reader, out path))
-                throw new Exception();
+                return new JumpCommand(path, new ParseException("Unable to parse <path>"));
 
             string label;
             if (TryReadString(reader, out label))
@@ -266,7 +266,7 @@ namespace VNDS
         {
             int delay;
             if (!TryReadInt(reader, out delay))
-                throw new Exception();
+                return new DelayCommand(0, new ParseException("Unable to parse <delay>"));
 
             return new DelayCommand(delay);
         }
@@ -275,15 +275,15 @@ namespace VNDS
         {
             string variable;
             if (!TryReadString(reader, out variable))
-                throw new Exception();
+                return new RandomCommand("", 0, 0, new ParseException("Unable to parse <variable>"));
 
             int low;
             if (!TryReadInt(reader, out low))
-                throw new Exception();
+                return new RandomCommand(variable, low, 0, new ParseException("Unable to parse <low>"));
 
             int high;
             if (!TryReadInt(reader, out high))
-                throw new Exception();
+                return new RandomCommand(variable, low, high, new ParseException("Unable to parse <low>"));
 
             return new RandomCommand(variable, low, high);
         }
@@ -292,7 +292,7 @@ namespace VNDS
         {
             string label;
             if (!TryReadString(reader, out label))
-                throw new Exception();
+                return new LabelCommand("", new ParseException("Unable to parse <label>"));
 
             return new LabelCommand(label);
         }
@@ -301,7 +301,7 @@ namespace VNDS
         {
             string label;
             if (!TryReadString(reader, out label))
-                throw new Exception();
+                return new GoToCommand("", new ParseException("Unable to parse <label>"));
 
             return new GoToCommand(label);
         }
