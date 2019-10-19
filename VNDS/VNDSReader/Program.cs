@@ -53,9 +53,7 @@ namespace VNDSReader
             var reader = new StringCharReader(text);
             var parser = new Parser(reader);
 
-            var commands = new List<Command>();
-            for (var command = parser.ParseCommand(); command != null; command = parser.ParseCommand())
-                commands.Add(command);
+            var commands = new List<Command>(parser.ParseCommands());
             
             using(var writer = new StreamWriter(Path.ChangeExtension(path, ".vnvita")))
             {

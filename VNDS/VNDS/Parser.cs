@@ -30,78 +30,22 @@ namespace VNDS
             this.reader = reader;
         }
 
-        private static bool TryReadString(ICharReader reader, out string result)
+        public IEnumerable<Command> ParseCommands()
         {
-            return reader.TryReadUntilAny(out result, delimiters);
-        }
-
-        private static bool TryReadInt(ICharReader reader, out int result)
-        {
-            string text;
-            if (!TryReadString(reader, out text))
-            {
-                result = 0;
-                return false;
-            }
-
-            return (int.TryParse(text, out result));
-        }
-
-        private static bool TryReadSetOperation(string op, out SetOperation operation)
-        {
-            switch (op.Trim())
-            {
-                case "=":
-                    operation = SetOperation.Assign;
-                    return true;
-                case "+":
-                    operation = SetOperation.Add;
-                    return true;
-                case "-":
-                    operation = SetOperation.Subtract;
-                    return true;
-                default:
-                    operation = default(SetOperation);
-                    return false;
-            }
-        }
-
-        private static bool TryReadIfOperation(string op, out IfOperation operation)
-        {
-            switch (op.Trim())
-            {
-                case "==":
-                    operation = IfOperation.Equals;
-                    return true;
-                case "!=":
-                    operation = IfOperation.NotEquals;
-                    return true;
-                case "<":
-                    operation = IfOperation.LessThan;
-                    return true;
-                case ">":
-                    operation = IfOperation.GreaterThan;
-                    return true;
-                case "<=":
-                    operation = IfOperation.LessThanEquals;
-                    return true;
-                case ">=":
-                    operation = IfOperation.GreaterThanEquals;
-                    return true;
-                default:
-                    operation = default(IfOperation);
-                    return false;
-            }
+            for (var command = this.ParseNextCommand(); command != null; command = this.ParseNextCommand())
+                yield return command;
         }
         
-        public Command ParseCommand()
+        public Command ParseNextCommand()
         {
             var text = this.reader.ReadUntilAny('\n');
-            if (text == null) return null;
-            return this.ParseCommand(new StringCharReader(text));
+            if (text == null)
+                return null;
+
+            return this.ParseNextCommand(new StringCharReader(text));
         }
 
-        private Command ParseCommand(ICharReader reader)
+        private Command ParseNextCommand(ICharReader reader)
         {
             string name = reader.ReadUntilAny(delimiters);
 
@@ -360,6 +304,70 @@ namespace VNDS
                 throw new Exception();
 
             return new GoToCommand(label);
+        }
+
+        private static bool TryReadString(ICharReader reader, out string result)
+        {
+            return reader.TryReadUntilAny(out result, delimiters);
+        }
+
+        private static bool TryReadInt(ICharReader reader, out int result)
+        {
+            string text;
+            if (!TryReadString(reader, out text))
+            {
+                result = 0;
+                return false;
+            }
+
+            return (int.TryParse(text, out result));
+        }
+
+        private static bool TryReadSetOperation(string op, out SetOperation operation)
+        {
+            switch (op.Trim())
+            {
+                case "=":
+                    operation = SetOperation.Assign;
+                    return true;
+                case "+":
+                    operation = SetOperation.Add;
+                    return true;
+                case "-":
+                    operation = SetOperation.Subtract;
+                    return true;
+                default:
+                    operation = default(SetOperation);
+                    return false;
+            }
+        }
+
+        private static bool TryReadIfOperation(string op, out IfOperation operation)
+        {
+            switch (op.Trim())
+            {
+                case "==":
+                    operation = IfOperation.Equals;
+                    return true;
+                case "!=":
+                    operation = IfOperation.NotEquals;
+                    return true;
+                case "<":
+                    operation = IfOperation.LessThan;
+                    return true;
+                case ">":
+                    operation = IfOperation.GreaterThan;
+                    return true;
+                case "<=":
+                    operation = IfOperation.LessThanEquals;
+                    return true;
+                case ">=":
+                    operation = IfOperation.GreaterThanEquals;
+                    return true;
+                default:
+                    operation = default(IfOperation);
+                    return false;
+            }
         }
     }
 }
