@@ -20,15 +20,15 @@ namespace VNDS.Commands
 {
     public abstract class CommandVisitor
     {
+        public void Visit(Command command)
+        {
+            command.Accept(this);
+        }
+
         public void Visit(IEnumerable<Command> commands)
         {
             foreach (var command in commands)
                 this.Visit(command);
-        }
-
-        public void Visit(Command command)
-        {
-            command.Accept(this);
         }
 
         protected internal abstract void VisitSkipCommand(SkipCommand skipCommand);
