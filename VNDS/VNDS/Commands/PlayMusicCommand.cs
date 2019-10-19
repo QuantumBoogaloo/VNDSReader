@@ -21,6 +21,13 @@ namespace VNDS.Commands
         private string path;
 
         public PlayMusicCommand(string path)
+            : base()
+        {
+            this.path = path;
+        }
+
+        public PlayMusicCommand(string path, params ParseException[] exceptions)
+            : base(exceptions)
         {
             this.path = path;
         }

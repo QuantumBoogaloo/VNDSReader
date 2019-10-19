@@ -23,6 +23,15 @@ namespace VNDS.Commands
         private string rightExpression;
 
         public SetLocalVariableCommand(string leftExpression, SetOperation operation, string rightExpression)
+            : base()
+        {
+            this.leftExpression = leftExpression;
+            this.operation = operation;
+            this.rightExpression = rightExpression;
+        }
+
+        public SetLocalVariableCommand(string leftExpression, SetOperation operation, string rightExpression, params ParseException[] exceptions)
+            : base(exceptions)
         {
             this.leftExpression = leftExpression;
             this.operation = operation;

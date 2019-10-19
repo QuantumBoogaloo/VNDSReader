@@ -18,13 +18,28 @@ namespace VNDS.Commands
 {
     public class BackgroundLoadCommand : Command
     {
+        private const int defaultFadeTime = -1;
+
         private string path;
         private int fadeTime;
 
-        public BackgroundLoadCommand(string path, int fadeTime = -1)
+        public BackgroundLoadCommand(string path, int fadeTime = defaultFadeTime)
+            : base()
         {
             this.path = path;
             this.fadeTime = fadeTime;
+        }
+
+        public BackgroundLoadCommand(string path, int fadeTime, params ParseException[] exceptions)
+            : base(exceptions)
+        {
+            this.path = path;
+            this.fadeTime = fadeTime;
+        }
+
+        public BackgroundLoadCommand(string path, params ParseException[] exceptions)
+            : this(path, defaultFadeTime, exceptions)
+        {
         }
 
         public string Path

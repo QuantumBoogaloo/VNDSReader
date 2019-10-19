@@ -21,6 +21,13 @@ namespace VNDS.Commands
         private int time;
 
         public DelayCommand(int time)
+            : base()
+        {
+            this.time = time;
+        }
+
+        public DelayCommand(int time, params ParseException[] exceptions)
+            : base(exceptions)
         {
             this.time = time;
         }

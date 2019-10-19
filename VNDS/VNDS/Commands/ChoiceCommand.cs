@@ -26,6 +26,14 @@ namespace VNDS.Commands
         private ReadOnlyCollection<string> choicesWrapper;
 
         public ChoiceCommand(IEnumerable<string> choices)
+            : base()
+        {
+            this.choices = choices.ToArray();
+            this.choicesWrapper = new ReadOnlyCollection<string>(this.choices);
+        }
+
+        public ChoiceCommand(IEnumerable<string> choices, params ParseException[] exceptions)
+            : base(exceptions)
         {
             this.choices = choices.ToArray();
             this.choicesWrapper = new ReadOnlyCollection<string>(this.choices);

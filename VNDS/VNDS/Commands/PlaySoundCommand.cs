@@ -18,13 +18,28 @@ namespace VNDS.Commands
 {
     public class PlaySoundCommand : SoundCommand
     {
+        private const int defaultRepeats = 1;
+
         private string path;
         private int repeats;
 
-        public PlaySoundCommand(string path, int repeats = 1)
+        public PlaySoundCommand(string path, int repeats = defaultRepeats)
+            : base()
         {
             this.path = path;
             this.repeats = repeats;
+        }
+
+        public PlaySoundCommand(string path, int repeats, params ParseException[] exceptions)
+            : base(exceptions)
+        {
+            this.path = path;
+            this.repeats = repeats;
+        }
+
+        public PlaySoundCommand(string path, params ParseException[] exceptions)
+            : this(path, defaultRepeats, exceptions)
+        {
         }
 
         public string Path

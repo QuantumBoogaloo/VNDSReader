@@ -18,10 +18,25 @@ namespace VNDS.Commands
 {
     public class JumpCommand : Command
     {
+        private const string defaultLabel = "";
+
         private string path;
         private string label;
 
-        public JumpCommand(string path, string label = "")
+        public JumpCommand(string path, string label = defaultLabel)
+            : base()
+        {
+            this.path = path;
+            this.label = label;
+        }
+
+        public JumpCommand(string path, params ParseException[] exceptions)
+            : this(path, defaultLabel, exceptions)
+        {
+        }
+
+        public JumpCommand(string path, string label, params ParseException[] exceptions)
+            : base(exceptions)
         {
             this.path = path;
             this.label = label;

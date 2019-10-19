@@ -23,6 +23,15 @@ namespace VNDS.Commands
         private int high;
 
         public RandomCommand(string variable, int low, int high)
+            : base()
+        {
+            this.variable = variable;
+            this.low = low;
+            this.high = high;
+        }
+
+        public RandomCommand(string variable, int low, int high, params ParseException[] exceptions)
+            : base(exceptions)
         {
             this.variable = variable;
             this.low = low;

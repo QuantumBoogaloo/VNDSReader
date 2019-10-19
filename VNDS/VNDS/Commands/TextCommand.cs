@@ -22,9 +22,17 @@ namespace VNDS.Commands
         private TextOptions options;
 
         public TextCommand(string text, TextOptions options)
+            : base()
         {
             this.text = text;
             this.options = options;
+        }
+
+        public TextCommand(string text, TextOptions options, params ParseException[] exceptions)
+            : base(exceptions)
+        {
+            this.text = text;
+            this.options = options;            
         }
 
         public string Text

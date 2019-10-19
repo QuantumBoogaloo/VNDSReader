@@ -21,6 +21,13 @@ namespace VNDS.Commands
         private string label;
 
         public GoToCommand(string label)
+            : base()
+        {
+            this.label = label;
+        }
+
+        public GoToCommand(string label, params ParseException[] exceptions)
+            : base(exceptions)
         {
             this.label = label;
         }

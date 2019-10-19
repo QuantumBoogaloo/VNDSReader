@@ -23,6 +23,15 @@ namespace VNDS.Commands
         private int y;
 
         public SetImageCommand(string path, int x, int y)
+            : base()
+        {
+            this.path = path;
+            this.x = x;
+            this.y = y;
+        }
+
+        public SetImageCommand(string path, int x, int y, params ParseException[] exceptions)
+            : base(exceptions)
         {
             this.path = path;
             this.x = x;

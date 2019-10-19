@@ -23,6 +23,15 @@ namespace VNDS.Commands
         private string rightExpression;
 
         public IfCommand(string leftExpression, IfOperation operation, string rightExpression)
+            : base()
+        {
+            this.leftExpression = leftExpression;
+            this.operation = operation;
+            this.rightExpression = rightExpression;
+        }
+
+        public IfCommand(string leftExpression, IfOperation operation, string rightExpression, params ParseException[] exceptions)
+            : base(exceptions)
         {
             this.leftExpression = leftExpression;
             this.operation = operation;
