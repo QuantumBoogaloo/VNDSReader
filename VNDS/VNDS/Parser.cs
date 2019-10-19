@@ -68,9 +68,9 @@ namespace VNDS
                 case "choice":
                     return this.ParseChoiceCommand(reader);
                 case "setvar":
-                    return this.ParseSetVariableCommand(reader);
+                    return this.ParseLocalVariableCommand(reader);
                 case "gsetvar":
-                    return this.ParseGlobalSetVariableCommand(reader);
+                    return this.ParseGlobalVariableCommand(reader);
                 case "if":
                     return this.ParseIfCommand(reader);
                 case "fi":
@@ -184,7 +184,7 @@ namespace VNDS
             return new ChoiceCommand(choices);
         }
 
-        private Command ParseSetVariableCommand(ICharReader reader)
+        private LocalVariableCommand ParseLocalVariableCommand(ICharReader reader)
         {
             string left;
             if (!TryReadString(reader, out left))
@@ -208,7 +208,7 @@ namespace VNDS
                 return new SetLocalVariableCommand(left, operation, "", new ParseException("Unable to parse <right>"));
         }
 
-        private Command ParseGlobalSetVariableCommand(ICharReader reader)
+        private GlobalVariableCommand ParseGlobalVariableCommand(ICharReader reader)
         {
             string left;
             if (!TryReadString(reader, out left))
