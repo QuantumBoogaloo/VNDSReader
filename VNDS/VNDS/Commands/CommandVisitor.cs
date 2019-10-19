@@ -1,4 +1,6 @@
-﻿//
+﻿using System.Collections.Generic;
+
+//
 //  Copyright (C) 2019 Pharap (@Pharap)
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +20,12 @@ namespace VNDS.Commands
 {
     public abstract class CommandVisitor
     {
+        public void Visit(IEnumerable<Command> commands)
+        {
+            foreach (var command in commands)
+                this.Visit(command);
+        }
+
         public void Visit(Command command)
         {
             command.Accept(this);
