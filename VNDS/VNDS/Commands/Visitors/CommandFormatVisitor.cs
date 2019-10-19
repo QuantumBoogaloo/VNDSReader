@@ -199,7 +199,7 @@ namespace VNDS.Commands.Visitors
             if (textCommand.Options == TextOptions.None)
             {
                 if (string.IsNullOrWhiteSpace(textCommand.Text))
-                    this.writer.WriteLine("text ~", textCommand.Text);
+                    this.writer.WriteLine("text ~");
                 else
                     this.writer.WriteLine("text @{0}", textCommand.Text);
             }

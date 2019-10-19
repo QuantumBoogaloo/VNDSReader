@@ -38,11 +38,12 @@ namespace VNDS
         
         public Command ParseNextCommand()
         {
-            var text = this.reader.ReadUntilAny('\n');
-            if (text == null)
-                return null;
+            string text;
 
-            return this.ParseNextCommand(new StringCharReader(text));
+            if (this.reader.TryReadUntilAny(out text, '\n'))
+                return this.ParseNextCommand(new StringCharReader(text));
+
+            return null;
         }
 
         private Command ParseNextCommand(ICharReader reader)
@@ -123,11 +124,14 @@ namespace VNDS
             return new SetImageCommand(path, x, y);
         }
 
-        private PlaySoundCommand ParseSoundCommand(ICharReader reader)
+        private SoundCommand ParseSoundCommand(ICharReader reader)
         {
             string path;
             if (!TryReadString(reader, out path))
                 return new PlaySoundCommand(path, new ParseException("Unable to parse <path>"));
+            
+            if (path.Trim() == "~")
+                return new StopSoundCommand();
 
             int repeats;
             if (TryReadInt(reader, out repeats))
