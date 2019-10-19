@@ -53,7 +53,7 @@ namespace VNDSReader
             var reader = new StringCharReader(text);
             var parser = new Parser(reader);
 
-            var commands = new List<Command>(parser.ParseCommands());
+            var commands = new List<Command>(FilterErroneousCommands(parser.ParseCommands()));
             
             using(var writer = new StreamWriter(Path.ChangeExtension(path, ".vnvita")))
             {
@@ -61,6 +61,31 @@ namespace VNDSReader
 
                 foreach (var command in commands)
                     formatter.Visit(command);
+            }
+        }
+
+        static IEnumerable<Command> FilterErroneousCommands(IEnumerable<Command> commands)
+        {
+            var enumerator = commands.GetEnumerator();
+
+            bool inErroneousIfBlock = false;
+
+            while (enumerator.MoveNext())
+            {
+                if (inErroneousIfBlock)
+                {
+                    if (enumerator.Current is FiCommand)
+                        inErroneousIfBlock = false;
+                }
+                else if (enumerator.Current.IsErroneous)
+                {
+                    if (enumerator.Current is IfCommand)
+                        inErroneousIfBlock = true;
+                }
+                else
+                {
+                    yield return enumerator.Current;
+                }
             }
         }
     }
